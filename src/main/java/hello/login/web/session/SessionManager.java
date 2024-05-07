@@ -49,8 +49,10 @@ public class SessionManager {
     /**
      * 세션 만료
      */
-    public void expire(HttpServletRequest request){
+    public void expire(HttpServletRequest request,HttpServletResponse response){
         Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
+        sessionCookie.setMaxAge(0);
+        response.addCookie(sessionCookie);
         if(sessionCookie != null){
             sessionStore.remove(sessionCookie.getValue());
         }
